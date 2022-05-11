@@ -20,10 +20,10 @@ router.get("/characters", async (req, res) => {
 //******************************************************************************************************************************************//
 //                                                          Get a the infos of a specific character                                         //
 //******************************************************************************************************************************************//
-router.get("/character/:characterId", async (req, res) => {
+router.get("/character/:id", async (req, res) => {
   try {
     const response = await axios.get(
-      `https://lereacteur-marvel-api.herokuapp.com/character/${req.params.characterId}?apiKey=${process.env.API_KEY}`
+      `https://lereacteur-marvel-api.herokuapp.com/character/${req.params.id}?apiKey=${process.env.API_KEY}`
     );
     console.log(response.data);
     res.status(200).send(response.data);

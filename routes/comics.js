@@ -7,18 +7,8 @@ const axios = require("axios");
 //******************************************************************************************************************************************//
 router.get("/comics", async (req, res) => {
   try {
-    // search a comic by title
-    const title = req.query.title;
-    if (title) {
-      String(title);
-    } else {
-      title = "";
-    }
-
-    const skip = 100 * (req.query.page - 1);
-
     const response = await axios.get(
-      `https://lereacteur-marvel-api.herokuapp.com/comics?apiKey=${process.env.API_KEY}&title=${title}&skip=${skip}`
+      `https://lereacteur-marvel-api.herokuapp.com/comics?apiKey=${process.env.API_KEY}`
     );
     console.log(response.data);
     res.status(200).json(response.data);
@@ -31,10 +21,10 @@ router.get("/comics", async (req, res) => {
 //                                             Get a list of comics containing a specific character                                         //
 //******************************************************************************************************************************************//
 
-router.get("/comics/:characterId", async (req, res) => {
+router.get("/comics/:id", async (req, res) => {
   try {
     const response = await axios.get(
-      `https://lereacteur-marvel-api.herokuapp.com/comics/${req.params.characterId}?apiKey=${process.env.API_KEY}`
+      `https://lereacteur-marvel-api.herokuapp.com/comics/${req.params.id}?apiKey=${process.env.API_KEY}`
     );
     console.log(response.data);
     res.status(200).send(response.data);
