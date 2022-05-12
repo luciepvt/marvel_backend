@@ -1,15 +1,16 @@
 require("dotenv").config();
 const express = require("express");
-const formidableMiddleWare = require("express-formidable"); //bonus
-const mongoose = require("mongoose"); //bonus
+const formidableMiddleWare = require("express-formidable");
+const mongoose = require("mongoose");
 const cors = require("cors");
 
-//mongoose.connect("mongodb://localhost:3000/marvel-app"); // bonus
+mongoose.connect(process.env.MONGODB_URI);
 
 const app = express();
 app.use(cors());
 app.use(formidableMiddleWare());
-
+const usersRoute = require("./routes/users");
+app.use(usersRoute);
 const comicsRoutes = require("./routes/comics");
 app.use(comicsRoutes);
 
