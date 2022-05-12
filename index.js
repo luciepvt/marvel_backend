@@ -9,8 +9,10 @@ mongoose.connect(process.env.MONGODB_URI);
 const app = express();
 app.use(cors());
 app.use(formidableMiddleWare());
+
 const usersRoute = require("./routes/users");
 app.use(usersRoute);
+
 const comicsRoutes = require("./routes/comics");
 app.use(comicsRoutes);
 
