@@ -55,7 +55,7 @@ router.post("/user/login", async (req, res) => {
     if (loggedUser === null) {
       res.status(401).json({ message: "Unauthorized" });
     } else {
-      const newHash = SHA256(req.fields.password + userToFind.salt).toString(
+      const newHash = SHA256(req.fields.password + loggedUser.salt).toString(
         encBase64
       );
       if (newHash !== loggedUser.hash) {
