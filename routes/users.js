@@ -11,7 +11,7 @@ const uid2 = require("uid2");
 
 router.post("/user/signup", async (req, res) => {
   try {
-    const { username, email, password } = req.fields;
+    const { email, password } = req.fields;
     // check mail
     const isEmailAlreadyExist = await User.findOne({
       email: email,
@@ -28,14 +28,19 @@ router.post("/user/signup", async (req, res) => {
 
       const newUser = new User({
         email: req.fields.email,
-        token: token,
-        hash: hash,
-        salt: salt,
+        token,
+        hash,
+        salt,
+        favoriteCharacters,
+        favoriteComics,
       });
       newUser.save();
       res.json({
+        _id: newUser._id,
         email: newUser.email,
         token: newUser.token,
+        favoriteCharacters: newUser.favoriteCharacters,
+        favoriteComics: newUser.favoriteComics,
       });
     }
   } catch (error) {
@@ -61,9 +66,13 @@ router.post("/user/login", async (req, res) => {
       if (newHash !== loggedUser.hash) {
         res.status(400).json({ message: "Unauthorized" });
       } else {
-        res
-          .status(200)
-          .json({ email: loggedUser.email, token: loggedUser.token });
+        res.status(200).json({
+          _id: loggedUser._id,
+          email: loggedUser.email,
+          token: loggedUser.token,
+          favoriteCharacters: loggedUser.favoriteCharacters,
+          favoriteComics: loggedUser.favoriteComics,
+        });
       }
     }
   } catch (error) {
