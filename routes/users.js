@@ -12,7 +12,7 @@ const uid2 = require("uid2");
 router.post("/user/signup", async (req, res) => {
   try {
     const { email, password, favoriteCharacters, favoriteComics } = req.fields;
-    // check mail
+
     // console.log(req.fields);
     const isEmailAlreadyExist = await User.findOne({
       email: email,
@@ -22,7 +22,6 @@ router.post("/user/signup", async (req, res) => {
         .status(400)
         .json({ message: "this email is already linked to another account" });
     } else {
-      // hashing password
       const salt = uid2(16);
       const hash = SHA256(password + salt).toString(encBase64);
       const token = uid2(16);
