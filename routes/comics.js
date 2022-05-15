@@ -8,7 +8,7 @@ router.get("/comics", async (req, res) => {
     const response = await axios.get(
       `https://lereacteur-marvel-api.herokuapp.com/comics?apiKey=${process.env.API_KEY}&skip=${skip}&title=${req.query.search}`
     );
-    console.log(response.data);
+
     res.status(200).json(response.data);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -20,7 +20,7 @@ router.get("/comics/:id", async (req, res) => {
     const response = await axios.get(
       `https://lereacteur-marvel-api.herokuapp.com/comics/${req.params.id}?apiKey=${process.env.API_KEY}`
     );
-    console.log(response.data);
+
     res.status(200).send(response.data);
   } catch (error) {
     res.status(400).json({ message: error.message });

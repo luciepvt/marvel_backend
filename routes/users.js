@@ -11,8 +11,9 @@ const uid2 = require("uid2");
 
 router.post("/user/signup", async (req, res) => {
   try {
-    const { email, password } = req.fields;
+    const { email, password, favoriteCharacters, favoriteComics } = req.fields;
     // check mail
+    // console.log(req.fields);
     const isEmailAlreadyExist = await User.findOne({
       email: email,
     });
@@ -27,12 +28,12 @@ router.post("/user/signup", async (req, res) => {
       const token = uid2(16);
 
       const newUser = new User({
-        email: req.fields.email,
-        token,
-        hash,
-        salt,
-        favoriteCharacters,
-        favoriteComics,
+        email: email,
+        token: token,
+        hash: hash,
+        salt: salt,
+        favoriteCharacters: favoriteCharacters,
+        favoriteComics: favoriteComics,
       });
       newUser.save();
       res.json({
@@ -75,6 +76,7 @@ router.post("/user/login", async (req, res) => {
         });
       }
     }
+    console.log(req.fields);
   } catch (error) {
     res.status(400).json({
       error: {
